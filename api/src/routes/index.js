@@ -119,14 +119,14 @@ router.get("/videogames", async (req, res) => {
     const {name} = req.query;
     let apiVideogames = await getApiVideogames();
     let dbVideogames = await getDbVideogames();
-    let allVideogames = [...dbVideogames, ...apiVideogames];
     if (name) {
+        let allVideogames = [...dbVideogames, ...apiVideogames];
         let nameVideogames = allVideogames.filter(videogame => videogame.name.toLowerCase().includes(name.toLowerCase()))
         nameVideogames.length ? 
         res.status(200).send(nameVideogames) :
         res.status(404).send("Not found videogames");
     } else {
-        allVideogames = allVideogames.slice(0, 100);
+        let allVideogames = [...apiVideogames.slice(0, apiVideogames.length - dbVideogames.length), ...dbVideogames];
         res.status(200).send(allVideogames);
     }
 })
