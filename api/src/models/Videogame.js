@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     description_raw: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     released: {
@@ -23,13 +23,17 @@ module.exports = (sequelize) => {
     },
     rating: { // mayor que 0 menor que 5
       type: DataTypes.FLOAT,
+      validate: {
+        max: 5,
+        min: 0,
+      },
     },
     platforms: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     background_image: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     createdInDb: {
       type: DataTypes.BOOLEAN,

@@ -92,6 +92,26 @@ const getApiGenres = async () => {
     });
 }
 
+const getPlatforms = async () => {
+    let url = URL_API_GAMES + "?key=" + API_KEY;
+    let allPlatforms = [];
+    for (let i = 0; i < LLAMADOS_API_GAMES; i++) {
+        const apiAll = await axios.get(url);
+        const apiData = await apiAll.data.results;
+        for (let i = 0; i < apiData.length; i++) {
+            const videogame = apiData[i];
+            let {platforms} = videogame;
+            for (let i = 0; i < platforms.length; i++) {
+                const platform = platforms[i].platform.name;
+                if(allPlatforms.indexOf(platform) === -1) allPlatforms.push(platform); 
+            }
+        }
+        url = apiAll.data.next;
+    }
+    console.log(allPlatforms);
+    return allPlatforms;
+}
+
 // Ruta para pedir videojuegos de la api y de la bd desde el front. 
 // Si no se le pasa query trae 100 videojuegos.
 // Si se le pasa name por query se trae como máximo 15 videojuegos que contengan el name.
@@ -138,7 +158,7 @@ router.post("/videogames", async (req, res) => {
     res.send("Videogame was created");
 })
 
-// Ruta para guardar los generos en la bd
+// Ruta para guardar los géneros en la bd.
 router.get("/genres", async (req, res) => {
     let genres = await getApiGenres();
     for (let i = 0; i < genres.length; i++) {
@@ -150,6 +170,15 @@ router.get("/genres", async (req, res) => {
     res.status(200).send(genres);
 })
 
+// Ruta para guardar las plataformas de videojuegos. 
+router.get("/platforms", async(req, res) => {
+    let platforms = await getPlatforms();
+    platforms = platforms.map(platform => {
+        return {name : platform}
+    })
+    res.status(200).send(platforms);
+})
 
 
+module.exports = buildPlatforms;
 module.exports = router;
