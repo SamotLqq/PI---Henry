@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGenres, getVideogames } from "../redux/actions";
+import { getGenres, getVideogames, filterByOrigin, filterByGenre, orderAction } from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import styled from "styled-components";
+import Paginado from "./Paginado";
 
 // Etiquetas con estilos
 export const ButtonCreate = styled.button `
@@ -26,6 +27,9 @@ export const Titulo = styled.h1 `
     font-size: 3vw;
     font-weight: 700;
     display: inline-block;
+    margin-bottom: 0px;
+    margin-top: 2vh;
+
 `
 
 export const ButtonCargar = styled.button `
@@ -37,7 +41,7 @@ export const ButtonCargar = styled.button `
     border-radius: 2vw;
     font-size: 2vw;
     font-weight: 900;
-    margin-bottom: 2vh;
+    margin: 2vh;
 `
 export const SelectFilter = styled.select `
     cursor:pointer;
@@ -92,15 +96,46 @@ export default function Home() {
     const dispatch = useDispatch();
     const allVideogames = useSelector(state => state.videogames);
     const allGenres = useSelector(state => state.genres);
+    const videogamesPorPagina = 15;
+    const [paginaActual, setPaginaActual] = useState(1);
+    const firstGameNext = videogamesPorPagina * paginaActual;
+    const firstGame = firstGameNext - videogamesPorPagina;
+    const videogamesPagina = allVideogames.slice(firstGame, firstGameNext);
+    const [order, setOrder] = useState("");
 
+    function paginado (numberPage) {
+        setPaginaActual(numberPage);
+    }
+
+    // despacha los videogames y los generos al state cuando se monta el componente.
     useEffect(() => {
         dispatch(getVideogames());
         dispatch(getGenres());
     }, [])
 
+    // despacha los videogames.
     function handleClick(e) {
         e.preventDefault()
         dispatch(getVideogames())
+    }
+
+    function handleOrigin (e) {
+        e.preventDefault()
+        dispatch(filterByOrigin(e.target.value));
+        setPaginaActual(1);
+    }
+
+    function handleGenre (e) {
+        e.preventDefault()
+        dispatch(filterByGenre(e.target.value));
+        setPaginaActual(1);
+    }
+
+    function handleOrder (e) {
+        e.preventDefault();
+        setPaginaActual(1);
+        setOrder("Ordenado" + e.target.value);
+        dispatch(orderAction(e.target.value));
     }
 
     return (
@@ -111,23 +146,24 @@ export default function Home() {
             <div><Titulo>VIDEOJUEGOS</Titulo></div>
             <ButtonCargar onClick={handleClick}>Cargar todos los videojuegos</ButtonCargar>
             <div>
-                <SelectFilter>
+                <SelectFilter onChange={handleOrder}>
                     <option value="ascAlf">Ascendente alfabético</option>
                     <option value="descAlf">Descendente alfabético</option>
                     <option value="ascRat">Ascendente rating</option>
                     <option value="descRat">Descendente rating</option>
                 </SelectFilter>
-                <SelectFilter style={{marginLeft: "1vw", marginRight: "1vh"}}>
+                <SelectFilter onChange={handleOrigin} style={{marginLeft: "1vw", marginRight: "1vh"}}>
                     <option value="db">Creados</option>
                     <option value="api">Existentes</option>
                     <option value="all">Todos</option>
                 </SelectFilter>
-                <SelectFilter>
+                <SelectFilter onChange={handleGenre}>
                     {allGenres && renderGenres(allGenres)}
                 </SelectFilter>
             </div>
+            <Paginado videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {allVideogames.length} setPaginaActual = {paginado}/>
             <div>
-                {allVideogames && renderVideogames(allVideogames)}
+                {videogamesPagina && renderVideogames(videogamesPagina)}
             </div>
         </div>
     )

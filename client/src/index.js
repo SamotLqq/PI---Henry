@@ -7,6 +7,11 @@ import {BrowserRouter} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 
+// le pasamos:
+// store al provider para tener nuestro estado global disponible.
+// browserrouter para poder declarar rutas.
+// app para que renderice nuestra aplicacion.
+// como segundo argumento la posición del dom donde queremos que se renderice nuestro virtual dom.
 ReactDOM.render(
   <Provider store = {store}>
     <BrowserRouter>
