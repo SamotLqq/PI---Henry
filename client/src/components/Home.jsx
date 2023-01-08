@@ -4,6 +4,89 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getVideogames } from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import styled from "styled-components";
+
+// Etiquetas con estilos
+export const ButtonCreate = styled.button `
+    cursor:pointer;
+    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    color: #CB3234;
+    border: none;
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    font-size: 2vw;
+    font-weight: 900;
+`
+
+export const Titulo = styled.h1 `
+    color: white;
+    background: black;
+    border-radius: 1vw;
+    padding: 0.5vw;
+    font-size: 3vw;
+    font-weight: 700;
+    display: inline-block;
+`
+
+export const ButtonCargar = styled.button `
+    cursor:pointer;
+    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-size: cover;
+    color: #CB3234;
+    border: none;
+    border-radius: 2vw;
+    font-size: 2vw;
+    font-weight: 900;
+    margin-bottom: 2vh;
+`
+export const SelectFilter = styled.select `
+    cursor:pointer;
+
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    padding: 4px;
+    padding-left:8px;
+    position: static;
+    width: 300px;
+    height: 40px;
+    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    border: 0px !important;
+    border-radius: 16px;
+    margin-right: 8px;
+    color: #CB3234;
+
+    option {
+        color: white;
+        background: black;
+        font-weight: 900;
+        font-size: 15px;
+        line-height: 150%;
+        letter-spacing: -0.02em;
+        border: 0px !important;
+        border-radius: 16px;
+      }
+`
+
+// Recibe el arreglo con todos los generos y retorna un arreglo con todas las renderizaciones de los mismos
+function renderGenres (allGenres) {
+    return allGenres.map((genre,i) => {
+        return (
+            <option key = {i} value={genre.name}>{genre.name}</option>
+        )
+    })
+}
+
+// Recibe el arreglo con todos los videojuegos y retorna un arreglo con todas las renderizaciones de los mismos
+function renderVideogames (allVideogames) {
+    return allVideogames.map(videogame => {
+        return (
+            <Card id = {videogame.id}  key = {videogame.id} name = {videogame.name} image = {videogame.background_image} genres = {videogame.genres}/>
+        )
+    })
+}
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -22,39 +105,29 @@ export default function Home() {
 
     return (
         <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: "url(https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)"}}>
-            <Link to = "/create">Subir Videojuego</Link>
-            <h1>VIDEOJUEGOS</h1>
-            <button onClick={handleClick}>Cargar todos los videojuegos</button>
+            <Link to = "/create">
+                <ButtonCreate>Subir Videojuego</ButtonCreate>
+            </Link>
+            <div><Titulo>VIDEOJUEGOS</Titulo></div>
+            <ButtonCargar onClick={handleClick}>Cargar todos los videojuegos</ButtonCargar>
             <div>
-                <select>
+                <SelectFilter>
                     <option value="ascAlf">Ascendente alfabético</option>
                     <option value="descAlf">Descendente alfabético</option>
                     <option value="ascRat">Ascendente rating</option>
                     <option value="descRat">Descendente rating</option>
-                </select>
-                <select>
+                </SelectFilter>
+                <SelectFilter style={{marginLeft: "1vw", marginRight: "1vh"}}>
                     <option value="db">Creados</option>
                     <option value="api">Existentes</option>
                     <option value="all">Todos</option>
-                </select>
-                <select>
-                    {
-                        allGenres.map((genre,i) => {
-                            return (
-                                <option key = {i} value={genre.name}>{genre.name}</option>
-                            )
-                        })
-                    }
-                </select>
+                </SelectFilter>
+                <SelectFilter>
+                    {allGenres && renderGenres(allGenres)}
+                </SelectFilter>
             </div>
             <div>
-                {
-                    allVideogames && allVideogames.map(videogame => {
-                        return (
-                            <Card id = {videogame.id}  key = {videogame.id} name = {videogame.name} image = {videogame.background_image} genres = {videogame.genres}/>
-                        )
-                    })
-                }
+                {allVideogames && renderVideogames(allVideogames)}
             </div>
         </div>
     )
