@@ -37,7 +37,7 @@ export function getPlatforms() {
     }
 }
 
-// Accion para filtrar que tiene en payload los videojuegos filtrados por creados o existentes.
+// Accion para filtrar por videojuegos de la api o de la bd.
 export function filterByOrigin(payload) {
     return {
         type: "FILTER_BY_ORIGIN",
@@ -45,6 +45,7 @@ export function filterByOrigin(payload) {
     }
 }
 
+// Accion para filtrar por generos de videojuegos
 export function filterByGenre(payload) {
     return {
         type: "FILTER_BY_GENRE",
@@ -52,9 +53,36 @@ export function filterByGenre(payload) {
     }
 }
 
+// Accion para ordenar alfabeticamente o por rating.
 export function orderAction(payload) {
     return {
         type: "ORDER",
         payload
+    }
+}
+
+// Trea los personajes que contengasn name en su name.
+export function getNameVideogame(name) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.get(`${RUTA_VIDEOGAMES}/?name=${name}`);
+            dispatch({
+                type: "SEARCH",
+                payload: json.data
+            });
+        } catch (error) {
+            dispatch({
+                type: "SEARCH",
+                payload: []
+            });
+        }
+    }
+}
+
+// acción para subir el videojuego pasado por body a la base de datos.
+export function postVideogame(body) {
+    return async function (dispatch) {
+        const response = await axios.post(RUTA_VIDEOGAMES, body);
+        return response;
     }
 }

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import styled from "styled-components";
 import Paginado from "./Paginado";
+import SearchBar from "./Search";
 
 // Etiquetas con estilos
 export const ButtonCreate = styled.button `
@@ -75,7 +76,7 @@ export const SelectFilter = styled.select `
 `
 
 // Recibe el arreglo con todos los generos y retorna un arreglo con todas las renderizaciones de los mismos
-function renderGenres (allGenres) {
+export function renderGenres (allGenres) {
     return allGenres.map((genre,i) => {
         return (
             <option key = {i} value={genre.name}>{genre.name}</option>
@@ -145,6 +146,7 @@ export default function Home() {
             </Link>
             <div><Titulo>VIDEOJUEGOS</Titulo></div>
             <ButtonCargar onClick={handleClick}>Cargar todos los videojuegos</ButtonCargar>
+            <SearchBar setPaginaActual = {paginado}/>
             <div>
                 <SelectFilter onChange={handleOrder}>
                     <option value="ascAlf">Ascendente alfabético</option>

@@ -92,6 +92,7 @@ const getApiGenres = async () => {
     });
 }
 
+// Funcion que nos retorna un arreglo con todas las plataformas de videojuegos.
 const getPlatforms = async () => {
     let url = URL_API_GAMES + "?key=" + API_KEY;
     let allPlatforms = [];
@@ -120,7 +121,7 @@ router.get("/videogames", async (req, res) => {
     let apiVideogames = await getApiVideogames();
     let dbVideogames = await getDbVideogames();
     if (name) {
-        let allVideogames = [...dbVideogames, ...apiVideogames];
+        let allVideogames = [...apiVideogames, ...dbVideogames];
         let nameVideogames = allVideogames.filter(videogame => videogame.name.toLowerCase().includes(name.toLowerCase()))
         nameVideogames.length ? 
         res.status(200).send(nameVideogames) :
@@ -151,7 +152,8 @@ router.get("/videogames/:id", async (req, res) => {
 
 // Ruta para crear un nuevo videojuego en la bd.
 router.post("/videogames", async (req, res) => {
-    const {name, released, rating, platforms, genres, description_raw, background_image} = req.body;
+    let {name, released, rating, platforms, genres, description_raw, background_image} = req.body;
+    platforms = buildPlatforms(platforms);
     let newVideogame = await Videogame.create({name, released, rating, platforms, description_raw, background_image});
     let genreDb = await Genre.findAll({where:{name:genres}});
     newVideogame.addGenre(genreDb);

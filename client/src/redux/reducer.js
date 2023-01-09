@@ -7,6 +7,7 @@ const initialState = {
     platforms: [],
 }
 
+// ordena los videojuegos alfabéticamente de forma descendente (z -> a)
 function descAlf(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.name.toLowerCase() < v2.name.toLowerCase()) return 1;
@@ -14,6 +15,7 @@ function descAlf(videogames) {
     })
 }
 
+// ordena los videojuegos alfabéticamente de forma ascendente (a -> z)
 function ascAlf(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.name.toLowerCase() < v2.name.toLowerCase()) return -1;
@@ -21,6 +23,7 @@ function ascAlf(videogames) {
     })
 }
 
+// ordena los videojuegos por rating de forma descendente (5 -> 0)
 function descRat(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.rating < v2.rating) return 1;
@@ -28,6 +31,7 @@ function descRat(videogames) {
     })
 }
 
+// ordena los videojuegos por rating de forma ascendente (0 -> 5)
 function ascRat(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.rating < v2.rating) return -1;
@@ -79,6 +83,15 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 videogames: ordenados
+            }
+        case "SEARCH":
+            return {
+                ...state,
+                videogames : action.payload
+            }
+        case "POST_VIDEOGAME":
+            return {
+                ...state,
             }
         default:
             return state;
