@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const DivCard = styled.div `
    margin: 3%;
-   width: 20%;
+   width: 300px;
    display: inline-block;
    text-align: center;
    background: black;
@@ -29,14 +29,21 @@ function unirGeneros (genres) {
     return acc;
 }
 
-export default function Card ({id, name, image, genres}) {
+export default function Card ({id, name, image, genres, detail, platforms, released, rating}) {
     genres = unirGeneros(genres);
     return (
         <DivCard>
             <ImgCard src={image} alt="Not Found"/>
             <h1 style={{color: "white", margin: "5px"}}>{name}</h1>
             <h3 style={{color: "white"}}>{genres}</h3>
-            <Link to = {"/main/" + id} style={{color: "white", fontWeight: 900}}>Detalles</Link>
+            {!detail ? 
+            <Link to = {"/main/" + id} style={{color: "white", fontWeight: 900}}>Detalles</Link> :
+            <div>
+                <h3 style={{color: "white"}}>{platforms}</h3>
+                <h3 style={{color: "white"}}>{released}</h3>
+                <h3 style={{color: "white"}}>{rating}</h3>
+            </div>
+            }
         </DivCard>
     )
 }

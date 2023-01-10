@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGenres, getVideogames, filterByOrigin, filterByGenre, orderAction } from "../redux/actions";
+import { getGenres, getVideogames, filterByOrigin, filterByGenre, orderAction, getDescription } from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import styled from "styled-components";
@@ -110,6 +110,7 @@ export default function Home() {
 
     // despacha los videogames y los generos al state cuando se monta el componente.
     useEffect(() => {
+        dispatch(getDescription(0));
         dispatch(getVideogames());
         dispatch(getGenres());
     }, [])
@@ -117,7 +118,8 @@ export default function Home() {
     // despacha los videogames.
     function handleClick(e) {
         e.preventDefault()
-        dispatch(getVideogames())
+        dispatch(getVideogames(1))
+        setPaginaActual(1);
     }
 
     function handleOrigin (e) {
@@ -155,15 +157,15 @@ export default function Home() {
                     <option value="descRat">Descendente rating</option>
                 </SelectFilter>
                 <SelectFilter onChange={handleOrigin} style={{marginLeft: "1vw", marginRight: "1vh"}}>
+                    <option value="all">Todos</option>
                     <option value="db">Creados</option>
                     <option value="api">Existentes</option>
-                    <option value="all">Todos</option>
                 </SelectFilter>
                 <SelectFilter onChange={handleGenre}>
                     {allGenres && renderGenres(allGenres)}
                 </SelectFilter>
             </div>
-            <Paginado videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {allVideogames.length} setPaginaActual = {paginado}/>
+            <Paginado paginaActual = {paginaActual} videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {allVideogames.length} setPaginaActual = {paginado}/>
             <div>
                 {videogamesPagina && renderVideogames(videogamesPagina)}
             </div>

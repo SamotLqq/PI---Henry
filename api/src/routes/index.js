@@ -15,7 +15,7 @@ const URL_API_GENRES = "https://api.rawg.io/api/genres";
 const LLAMADOS_API_GAMES = 5;
 const CARACTER_UUID = "-";
 
-// Funcion para acomodar plataformas
+// Funcion para acomodar plataformas cuando vienen de la api
 const buildPlatforms = (platforms) => {
     let acc = "";
     for (let i = 0; i < platforms.length; i++) {
@@ -24,6 +24,17 @@ const buildPlatforms = (platforms) => {
     }
     return acc;
 }
+
+// Funcion para acomodar plataformas cuando vienen del front
+const buildPlatforms2 = (platforms) => {
+    let acc = "";
+    for (let i = 0; i < platforms.length; i++) {
+        if (i === 0) acc = platforms[i];
+        else acc = acc + ", " + platforms[i];
+    }
+    return acc;
+}
+
 
 // Función que nos retorna un arreglo con 100 videojuegos de la api.
 const getApiVideogames = async () => {
@@ -66,21 +77,32 @@ const getDbVideogames = async () => {
 
 
 // Funcion que nos retorna un objeto con id y descripcion_raw de un videojuego de la api.
-const getApiDescriptionById = async (id) => {
+const getApiById = async (id) => {
     let url = `${URL_API_GAMES}/${id}?key=${API_KEY}`;
     const apiAll = await axios.get(url);
-    return {description_raw : apiAll.data.description_raw};
+    let {name, released, rating, platforms, genres, background_image, description_raw} = apiAll.data;
+    platforms = buildPlatforms(platforms);
+    genres = genres.map(genre => genre.name);
+    return {name, released, rating, platforms, genres, background_image, description_raw};
 }
 
 // Funcion que nos retorna un objeto con id y description_raw de un videojuego de la bd.
-const getDbDescriptionById = async (id) => {
+const getDbById = async (id) => {
     let videogames = await Videogame.findAll({
-        attributes: ['description_raw'],
         where: {
             id,
+        },
+        include: {
+            model: Genre,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
         }
     })
-    return {description_raw : videogames[0].description_raw};
+    let {name, released, rating, genres, background_image, platforms, description_raw} = videogames[0].dataValues;
+    genres = genres.map(genre => genre.dataValues.name)
+    return {name, released, rating, genres, background_image, platforms, description_raw};
 }
 
 // Funcion que nos retorna un arreglo con todos lo generos de videojuegos.
@@ -109,7 +131,6 @@ const getPlatforms = async () => {
         }
         url = apiAll.data.next;
     }
-    console.log(allPlatforms);
     return allPlatforms;
 }
 
@@ -136,12 +157,15 @@ router.get("/videogames", async (req, res) => {
 router.get("/videogames/:id", async (req, res) => {
     const {id} = req.params;
     try {
-        if (!id.includes(CARACTER_UUID)) {
-            let apiDescription = await getApiDescriptionById(id);
+        if (id == 0) {
+            return res.status(200).send({});
+        }
+        else if (!id.includes(CARACTER_UUID)) {
+            let apiDescription = await getApiById(id);
             return res.status(200).send(apiDescription);
         }
         else {
-            let dbDescription = await getDbDescriptionById(id);
+            let dbDescription = await getDbById(id);
             return res.status(200).send(dbDescription);
         }
     }
@@ -153,7 +177,7 @@ router.get("/videogames/:id", async (req, res) => {
 // Ruta para crear un nuevo videojuego en la bd.
 router.post("/videogames", async (req, res) => {
     let {name, released, rating, platforms, genres, description_raw, background_image} = req.body;
-    platforms = buildPlatforms(platforms);
+    platforms = buildPlatforms2(platforms);
     let newVideogame = await Videogame.create({name, released, rating, platforms, description_raw, background_image});
     let genreDb = await Genre.findAll({where:{name:genres}});
     newVideogame.addGenre(genreDb);

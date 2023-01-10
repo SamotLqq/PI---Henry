@@ -5,6 +5,7 @@ const initialState = {
     videogames : [],
     genres: [],
     platforms: [],
+    description: {},
 }
 
 // ordena los videojuegos alfabéticamente de forma descendente (z -> a)
@@ -44,11 +45,19 @@ function rootReducer (state = initialState, action) {
     let filtrados;
     switch (action.type) {
         case "GET_VIDEOGAMES":
-            return {
-                ...state,
-                videogames : action.payload,
-                allVideogames : [...action.payload],
-            };
+            if (state.allVideogames.length === 0) {
+                return {
+                    ...state,
+                    videogames : action.payload,
+                    allVideogames : [...action.payload],
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    videogames : [...state.allVideogames]
+                }
+            }
         case "GET_GENRES":
             return {
                 ...state,
@@ -58,6 +67,11 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 platforms: action.payload,
+            }
+        case "GET_DESCRIPTION":
+            return {
+                ...state,
+                description: action.payload
             }
         case "FILTER_BY_ORIGIN":
             filtrados = state.allVideogames;
@@ -89,10 +103,8 @@ function rootReducer (state = initialState, action) {
                 ...state,
                 videogames : action.payload
             }
-        case "POST_VIDEOGAME":
-            return {
-                ...state,
-            }
+        case "POST":
+            return state;
         default:
             return state;
     }

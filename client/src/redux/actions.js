@@ -5,13 +5,21 @@ const RUTA_GENRES = "http://localhost:3001/genres";
 const RUTA_PLATFORMS = "http://localhost:3001/platforms";
 
 // Accion para traer videogames del back.
-export function getVideogames() {
-    return async function(dispatch) {
-        var json = await axios.get(RUTA_VIDEOGAMES);
-        dispatch({
-            type: "GET_VIDEOGAMES",
-            payload: json.data
-        });
+export function getVideogames(llamado) {
+    if (!llamado) {
+        return async function(dispatch) {
+            var json = await axios.get(RUTA_VIDEOGAMES);
+            dispatch({
+                type: "GET_VIDEOGAMES",
+                payload: json.data
+            });
+        
+        }
+    }
+    else {
+        return {
+            type: "GET_VIDEOGAMES"
+        }
     }
 }
 
@@ -82,7 +90,27 @@ export function getNameVideogame(name) {
 // acción para subir el videojuego pasado por body a la base de datos.
 export function postVideogame(body) {
     return async function (dispatch) {
-        const response = await axios.post(RUTA_VIDEOGAMES, body);
-        return response;
+        await axios.post(RUTA_VIDEOGAMES, body);
+        dispatch({
+            type: "POST",
+        })
+    }
+}
+
+// acción para traer la descripción del videojuego
+export function getDescription(id) {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(RUTA_VIDEOGAMES + "/" + id);
+            dispatch ({
+                type: "GET_DESCRIPTION",
+                payload: json.data
+            })
+        } catch (error) {
+            dispatch ({
+                type: "GET_DESCRIPTION",
+                payload: {}
+            })
+        }
     }
 }

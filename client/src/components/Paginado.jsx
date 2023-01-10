@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonCargar } from "./Home";
 
-export default function Paginado({videogamesPorPagina, cantidadVideogames, setPaginaActual}) {
+export default function Paginado({videogamesPorPagina, cantidadVideogames, setPaginaActual, paginaActual}) {
     const pageNumbers = [];
     const cantidadPaginas = Math.ceil(cantidadVideogames / videogamesPorPagina);
 
@@ -12,6 +12,11 @@ export default function Paginado({videogamesPorPagina, cantidadVideogames, setPa
     // Retorna un arreglo con las etiquetas necesarias para cada numero del paginado.
     function renderPaginado(pageNumbers) {
         return pageNumbers.map((number, i) => {
+            if (paginaActual === number) {
+                return (
+                    <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{background:"black"}}>{number}</ButtonCargar>
+                )
+            }
             return (
                 <ButtonCargar key={i} onClick={() => setPaginaActual(number)}>{number}</ButtonCargar>
             )
