@@ -11,39 +11,63 @@ import SearchBar from "./Search";
 // Etiquetas con estilos
 export const ButtonCreate = styled.button `
     cursor:pointer;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    color: #CB3234;
-    border: none;
-    border-bottom-left-radius: 1vw;
-    border-bottom-right-radius: 1vw;
-    font-size: 2vw;
+
     font-weight: 900;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    padding: 4px;
+    width: 200px;
+    height: 40px;
+    position: static;
+
+    color: #CB3234;
+    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-size: cover;
+
+    border: 0px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 `
 
-export const Titulo = styled.h1 `
+export const Titulo = styled.p `
     color: white;
     background: black;
-    border-radius: 1vw;
-    padding: 0.5vw;
-    font-size: 3vw;
-    font-weight: 700;
-    display: inline-block;
-    margin-bottom: 0px;
-    margin-top: 2vh;
-
+    height: 80px;
+    width: 100%;
+    font-size: 50px;
+    font-weight: 900;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0px 25px 0px;
+    @media (max-width: 600px) {
+        font-size: 30px;
+    }
 `
 
 export const ButtonCargar = styled.button `
     cursor:pointer;
+
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    padding: 4px;
+    margin: 8px;
+    width: 100px;
+    height: 40px;
+    position: static;
     background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
     background-size: cover;
+    border: 0px;
+    border-radius: 16px;
     color: #CB3234;
-    border: none;
-    border-radius: 2vw;
-    font-size: 2vw;
-    font-weight: 900;
-    margin: 2vh;
 `
+
 export const SelectFilter = styled.select `
     cursor:pointer;
 
@@ -53,14 +77,14 @@ export const SelectFilter = styled.select `
     letter-spacing: -0.02em;
 
     padding: 4px;
-    padding-left:8px;
-    position: static;
+    padding-left:15px;
+    margin: 8px;
     width: 300px;
     height: 40px;
+    position: static;
     background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    border: 0px !important;
+    border: 0px;
     border-radius: 16px;
-    margin-right: 8px;
     color: #CB3234;
 
     option {
@@ -111,8 +135,8 @@ export default function Home() {
     // despacha los videogames y los generos al state cuando se monta el componente.
     useEffect(() => {
         dispatch(getDescription(0));
-        dispatch(getVideogames());
-        dispatch(getGenres());
+        if (allVideogames.length === 0) dispatch(getVideogames());
+        if (allGenres.length === 0) dispatch(getGenres());
     }, [])
 
     // despacha los videogames.
@@ -136,9 +160,9 @@ export default function Home() {
 
     function handleOrder (e) {
         e.preventDefault();
-        setPaginaActual(1);
         setOrder("Ordenado" + e.target.value);
         dispatch(orderAction(e.target.value));
+        setPaginaActual(1);
     }
 
     return (
@@ -146,22 +170,24 @@ export default function Home() {
             <Link to = "/create">
                 <ButtonCreate>Subir Videojuego</ButtonCreate>
             </Link>
-            <div><Titulo>VIDEOJUEGOS</Titulo></div>
-            <ButtonCargar onClick={handleClick}>Cargar todos los videojuegos</ButtonCargar>
+            <div style={{display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}><Titulo>VIDEOJUEGOS</Titulo></div>
+            <ButtonCargar onClick={handleClick} style={{width: "350px"}}>Cargar todos los videojuegos</ButtonCargar>
             <SearchBar setPaginaActual = {paginado}/>
             <div>
-                <SelectFilter onChange={handleOrder}>
+                <SelectFilter defaultValue={'DEFAULT'} onChange={handleOrder}>
+                    <option value={'DEFAULT'} disabled>Selecciona una orden...</option>
                     <option value="ascAlf">Ascendente alfabético</option>
                     <option value="descAlf">Descendente alfabético</option>
                     <option value="ascRat">Ascendente rating</option>
                     <option value="descRat">Descendente rating</option>
                 </SelectFilter>
-                <SelectFilter onChange={handleOrigin} style={{marginLeft: "1vw", marginRight: "1vh"}}>
-                    <option value="all">Todos</option>
+                <SelectFilter defaultValue={'DEFAULT'} onChange={handleOrigin} style={{marginLeft: "1vw", marginRight: "1vh"}}>
+                    <option value={'DEFAULT'} disabled>Selecciona origen...</option>
                     <option value="db">Creados</option>
                     <option value="api">Existentes</option>
                 </SelectFilter>
-                <SelectFilter onChange={handleGenre}>
+                <SelectFilter defaultValue={'DEFAULT'} onChange={handleGenre}>
+                    <option value={'DEFAULT'} disabled>Selecciona generos...</option>
                     {allGenres && renderGenres(allGenres)}
                 </SelectFilter>
             </div>

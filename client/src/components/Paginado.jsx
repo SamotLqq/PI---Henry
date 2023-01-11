@@ -14,11 +14,11 @@ export default function Paginado({videogamesPorPagina, cantidadVideogames, setPa
         return pageNumbers.map((number, i) => {
             if (paginaActual === number) {
                 return (
-                    <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{background:"black"}}>{number}</ButtonCargar>
+                    <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{background:"black", width: "50px"}}>{number}</ButtonCargar>
                 )
             }
             return (
-                <ButtonCargar key={i} onClick={() => setPaginaActual(number)}>{number}</ButtonCargar>
+                <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{width: "50px"}}>{number}</ButtonCargar>
             )
         })
     }

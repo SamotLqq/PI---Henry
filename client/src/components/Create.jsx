@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getGenres, getPlatforms, postVideogame } from "../redux/actions";
+import { getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
 import { renderGenres } from "./Home";
 import { InputSearch } from "./Search";
 import { ButtonCargar } from "./Home";
@@ -17,11 +17,12 @@ const LabelTitle = styled.label `
     background-size: cover;
     color: #CB3234;
     border: none;
-    border-radius: 2vw;
-    font-size: 2vw;
+    border-radius: 16px;
+    font-size: 20px;
     font-weight: 900;
-    margin: 2vh;
-    padding: 0.5vh 1vh 0.5vh 1vh;
+    margin: 26px 10px 10px 10px;
+    padding: 10px;
+    display:inline-block;
 `
 
 const ButtonSelect = styled.button `
@@ -100,7 +101,7 @@ export default function Create() {
     const [input, setInput] = useState({
         name: "",
         released: "",
-        rating: 0,
+        rating: "",
         platforms: [],
         genres: [],
         description_raw: "",
@@ -143,8 +144,9 @@ export default function Create() {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
             dispatch(postVideogame(input));
+            dispatch(getVideogames());
             swal("Personaje creado con éxito", "", "success");
-            setInput({name: "", released: "", rating: 0, platforms: [], genres: [], description_raw: "", background_image: ""});
+            setInput({name: "", released: "", rating: "", platforms: [], genres: [], description_raw: "", background_image: ""});
             setErrors({vacio: "vacio"});
         }
         else {
@@ -162,12 +164,12 @@ export default function Create() {
     return (
         <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: "url(https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)"}}>
             <Link to={"/main"}><ButtonHome style={{marginBottom: "5vh"}}>Volver</ButtonHome></Link>
-            <div><Titulo>Crea tu videojuego</Titulo></div>
+            <div><Titulo>CREA TU VIDEOJUEGO</Titulo></div>
             <div style={{  minHeight: "75vh", display: "flex", justifyContent: "center", alignItems: "center"  }}>
             <form action="">
                 <div>
                     <LabelTitle htmlFor="">Nombre: </LabelTitle>
-                    <InputSearch type="text" name="name" value={input.name} onChange={handleChangeInput}/>
+                    <InputSearch type="text" name="name" value={input.name} onChange={handleChangeInput} placeholder="Introducir nombre..."/>
                     {errors.name && <Error>{errors.name}</Error>}
                 </div>
                 <div>
@@ -177,28 +179,34 @@ export default function Create() {
                 </div>
                 <div>
                     <LabelTitle htmlFor="">Rating: </LabelTitle>
-                    <InputSearch type="number" name="rating" value={input.rating} onChange={handleChangeInput}/>
+                    <InputSearch type="number" name="rating" value={input.rating} onChange={handleChangeInput} placeholder="Introducir rating..." required/>
                     {errors.rating && <Error>{errors.rating}</Error>}
                 </div>
                 <div>
                     <LabelTitle htmlFor="">Imagen: </LabelTitle>
-                    <InputSearch type="text" name="background_image" value={input.background_image} onChange={handleChangeInput}/>
+                    <InputSearch type="text" name="background_image" value={input.background_image} onChange={handleChangeInput} placeholder="Introducir url..."/>
                     {errors.background_image && <Error>{errors.background_image}</Error>}
                 </div>
                 <div>
                     <LabelTitle htmlFor="">Descripción: </LabelTitle>
-                    <InputSearch type="text" name="description_raw" value={input.description_raw} onChange={handleChangeInput}/>
+                    <InputSearch type="text" name="description_raw" value={input.description_raw} onChange={handleChangeInput} placeholder="Introducir descripción..."/>
                     {errors.description_raw && <Error>{errors.description_raw}</Error>}
                 </div>
                 <div>
                     <LabelTitle htmlFor="">Géneros: </LabelTitle>
-                    <SelectFilter defaultValue="Seleccione los generos" name="genres" onChange={handleSelect} style={{background: "black", color: "white", marginBottom: "1vh"}}>{renderGenres(genres)}</SelectFilter>
+                    <SelectFilter defaultValue="DEFAULT" name="genres" onChange={handleSelect} style={{background: "black", color: "white", marginBottom: "1vh"}}>
+                        <option value={'DEFAULT'} disabled>Elegir...</option>
+                        {renderGenres(genres)}
+                    </SelectFilter>
                     {errors.genres && <Error>{errors.genres}</Error>}
                 </div>
                 {viewSelect(input.genres, "genres")}
                 <div>
                     <LabelTitle htmlFor="">Plataformas: </LabelTitle>
-                    <SelectFilter defaultValue="Seleccione las plataformas" name="platforms" onChange={handleSelect} style={{background: "black", color: "white", marginTop: "1vh"}}>{renderPlatforms(platforms)}</SelectFilter>
+                    <SelectFilter defaultValue="DEFAULT" name="platforms" onChange={handleSelect} style={{background: "black", color: "white", marginTop: "1vh"}}>
+                        <option value={'DEFAULT'} disabled>Elegir...</option> 
+                        {renderPlatforms(platforms)}
+                    </SelectFilter>
                     {errors.platforms && <Error>{errors.platforms}</Error>}
                 </div>
                 {viewSelect(input.platforms, "platforms")}

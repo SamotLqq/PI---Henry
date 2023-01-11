@@ -9,14 +9,23 @@ export const InputSearch = styled.input `
     background: black;
     color: white;
     border: none;
-    border-radius: 2vw;
-    font-size: 2vw;
+    border-radius: 16px;
+    font-size: 20px;
     font-weight: 900;
-    padding-left: 2vh;
-    margin: 2vh;
+    position: static;
+    height: 40px;
+    width: 400px;
+    padding-left: 20px;
+    margin: 20px 10px 0px 0px;
     ::placeholder {
         color: white;
         opacity: 0.5;
+    }
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button
+    {
+    -webkit-appearance: none;
+    margin: 0;
     }
 `
 

@@ -45,7 +45,7 @@ function rootReducer (state = initialState, action) {
     let filtrados;
     switch (action.type) {
         case "GET_VIDEOGAMES":
-            if (state.allVideogames.length === 0) {
+            if (action.payload !== 1) { // el 1 significa no recargar basicamente.
                 return {
                     ...state,
                     videogames : action.payload,
@@ -93,7 +93,7 @@ function rootReducer (state = initialState, action) {
             if (action.payload === "ascAlf") ordenados = ascAlf(ordenados);
             else if (action.payload === "descAlf") ordenados = descAlf(ordenados)
             else if (action.payload === "ascRat") ordenados = ascRat(ordenados);
-            else ordenados = descRat(ordenados);
+            else if (action.payload === "descRat") ordenados = descRat(ordenados);
             return {
                 ...state,
                 videogames: ordenados

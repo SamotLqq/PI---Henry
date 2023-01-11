@@ -18,7 +18,8 @@ export function getVideogames(llamado) {
     }
     else {
         return {
-            type: "GET_VIDEOGAMES"
+            type: "GET_VIDEOGAMES",
+            payload: 1
         }
     }
 }

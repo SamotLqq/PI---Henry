@@ -5,12 +5,49 @@ import { getDescription } from "../redux/actions";
 import { useLocation } from "react-router-dom";
 import { ButtonCargar } from "./Home";
 import Card from "./Card";
+import styled from "styled-components";
+
+const ContenedorDetail = styled.div `
+    display: flex;
+    background-color : rgba(255,255,255,0.9);
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    @media (max-width: 600px) {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+`
+const MostrarOcultar = styled.button `
+    cursor:pointer;
+
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    padding: 4px;
+    margin: 8px;
+    width: 200px;
+    height: 40px;
+    position: static;
+    background: gray;
+    border: 0px;
+    border-radius: 16px;
+    color: white;
+
+`
+
+
 
 export default function Detail() {
     const dispatch = useDispatch();
     let location = useLocation();
     const id = location.pathname.split("/").pop();
     const [load, setLoad] = useState(false);
+    const [more, setMore] = useState(false);
 
     useEffect(() => {
         setLoad(true);
@@ -33,14 +70,22 @@ export default function Detail() {
 
     return (
         <div>
-            <div style={{display: "flex", backgroundColor : "rgba(255,255,255,0.9)", alignItems: "center", justifyContent: "center", margin: "10vh"}}>
-                <div style={{marginLeft : "10vh", marginRight: "5vh"}}>
+            <ContenedorDetail>
+                <div style={{margin: "25px"}}>
                     <Card name={name} image={background_image} genres={genres ? genres : []} detail={true} platforms={platforms} released={released} rating={rating}/>
                 </div>
-                <div style={{ display: "block", textAlign: "center", marginLeft : "5vh", marginRight: "10vh"}}>
-                    <h3>{description_raw}</h3>
+                <div style={{margin: "25px"}}>
+                    {more ? 
+                    <div>
+                        <h3>{description_raw}</h3>
+                        <MostrarOcultar onClick={() => {setMore(false)}}>{"VER MENOS <"}</MostrarOcultar>
+                    </div> : 
+                    <div>
+                        <h3>{description_raw ? description_raw.slice(0,100) + "..." : description_raw}</h3>
+                        <MostrarOcultar onClick={() => {setMore(true)}}>{"VER MAS >"}</MostrarOcultar>
+                    </div>}
                 </div>
-            </div>
+            </ContenedorDetail>
             <Link to={"/main"}><ButtonCargar>Volver</ButtonCargar></Link>
         </div>
 
