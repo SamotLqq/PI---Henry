@@ -25,15 +25,16 @@ const LabelTitle = styled.label `
     display:inline-block;
 `
 
-const ButtonSelect = styled.button `
+export const ButtonSelect = styled.button `
     cursor:pointer;
     background: #CB3234;
     color: black;
     border: none;
     border-radius: 2vw;
-    font-size: 2vw;
+    font-size: 15px;
     font-weight: 900;
-    margin: 1vh;
+    margin: 10px;
+    width: 300px;
     &:hover {
         text-decoration:line-through;
         text-decoration-color: black;
@@ -43,8 +44,9 @@ const ButtonSelect = styled.button `
 
 const Error = styled.p `
     display: inline-block;
-    font-size: 2vw;
+    font-size: 20px;
     font-weight: 900;
+    width: 500px;
     color: #CB3234;
     background: white;
 `

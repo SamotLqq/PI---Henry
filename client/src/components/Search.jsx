@@ -40,13 +40,14 @@ export default function SearchBar({setPaginaActual}) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setName("");
         await dispatch(getNameVideogame(name));
         setPaginaActual(1);
     }
 
     return (
         <div style={{marginBottom : "1vw"}}>
-            <InputSearch type="text" placeholder="Buscar por nombre..." onChange={handleInputChange}/>
+            <InputSearch type="text" placeholder="Buscar por nombre..." onChange={handleInputChange} value={name}/>
             <ButtonCargar type="submit" onClick={handleSubmit}>Buscar</ButtonCargar>
         </div>
     )

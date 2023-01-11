@@ -6,21 +6,13 @@ const RUTA_PLATFORMS = "http://localhost:3001/platforms";
 
 // Accion para traer videogames del back.
 export function getVideogames(llamado) {
-    if (!llamado) {
-        return async function(dispatch) {
-            var json = await axios.get(RUTA_VIDEOGAMES);
-            dispatch({
-                type: "GET_VIDEOGAMES",
-                payload: json.data
-            });
-        
-        }
-    }
-    else {
-        return {
+    return async function(dispatch) {
+        var json = await axios.get(RUTA_VIDEOGAMES);
+        dispatch({
             type: "GET_VIDEOGAMES",
-            payload: 1
-        }
+            payload: json.data
+        });
+    
     }
 }
 
@@ -46,26 +38,10 @@ export function getPlatforms() {
     }
 }
 
-// Accion para filtrar por videojuegos de la api o de la bd.
-export function filterByOrigin(payload) {
+// Accion para filtrar por origen y genero
+export function filter(payload) {
     return {
-        type: "FILTER_BY_ORIGIN",
-        payload
-    }
-}
-
-// Accion para filtrar por generos de videojuegos
-export function filterByGenre(payload) {
-    return {
-        type: "FILTER_BY_GENRE",
-        payload
-    }
-}
-
-// Accion para ordenar alfabeticamente o por rating.
-export function orderAction(payload) {
-    return {
-        type: "ORDER",
+        type: "FILTER",
         payload
     }
 }
@@ -113,5 +89,29 @@ export function getDescription(id) {
                 payload: {}
             })
         }
+    }
+}
+
+// Actualizar orden
+export function updateOrder(payload) {
+    return {
+        type: "UPDATE_ORDER",
+        payload
+    }
+}
+
+// Actualizar origen
+export function updateOrigen(payload) {
+    return {
+        type: "UPDATE_ORIGEN",
+        payload
+    }
+}
+
+// Actualizar generos
+export function updateGenres(payload) {
+    return {
+        type: "UPDATE_GENRES",
+        payload
     }
 }
