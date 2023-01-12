@@ -3,44 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getDescription } from "../redux/actions";
 import { useLocation } from "react-router-dom";
-import { ButtonCargar } from "./Home";
+import { ContenedorDetail, MostrarOcultar, ButtonCargar, Titulo } from "./styles";
 import Card from "./Card";
-import styled from "styled-components";
-
-const ContenedorDetail = styled.div `
-    display: flex;
-    background-color : rgba(255,255,255,0.9);
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    @media (max-width: 600px) {
-        display: block;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-`
-const MostrarOcultar = styled.button `
-    cursor:pointer;
-
-    font-weight: 900;
-    font-size: 20px;
-    line-height: 150%;
-    letter-spacing: -0.02em;
-
-    padding: 4px;
-    margin: 8px;
-    width: 200px;
-    height: 40px;
-    position: static;
-    background: gray;
-    border: 0px;
-    border-radius: 16px;
-    color: white;
-
-`
-
-
 
 export default function Detail() {
     const dispatch = useDispatch();
@@ -69,10 +33,11 @@ export default function Detail() {
     }
 
     return (
-        <div>
+        <div >
+            <Titulo style={{minWidth: "100vw"}}>DETALLE DE {name}</Titulo>
             <ContenedorDetail>
                 <div style={{margin: "25px"}}>
-                    <Card name={name} image={background_image} genres={genres ? genres : []} detail={true} platforms={platforms} released={released} rating={rating}/>
+                    <Card image={background_image} genres={genres ? genres : []} detail={true} platforms={platforms} released={released} rating={rating}/>
                 </div>
                 <div style={{margin: "25px"}}>
                     {more ? 
@@ -88,6 +53,5 @@ export default function Detail() {
             </ContenedorDetail>
             <Link to={"/main"}><ButtonCargar>Volver</ButtonCargar></Link>
         </div>
-
     )
 }

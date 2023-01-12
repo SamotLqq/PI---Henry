@@ -15,7 +15,7 @@ const URL_API_GENRES = "https://api.rawg.io/api/genres";
 const LLAMADOS_API_GAMES = 5;
 const CARACTER_UUID = "-";
 
-// Funcion para acomodar plataformas cuando vienen de la api
+// Funcion para acomodar plataformas cuando vienen de la api.
 const buildPlatforms = (platforms) => {
     let acc = "";
     for (let i = 0; i < platforms.length; i++) {
@@ -25,7 +25,7 @@ const buildPlatforms = (platforms) => {
     return acc;
 }
 
-// Funcion para acomodar plataformas cuando vienen del front
+// Funcion para acomodar plataformas cuando vienen del front.
 const buildPlatforms2 = (platforms) => {
     let acc = "";
     for (let i = 0; i < platforms.length; i++) {
@@ -137,6 +137,7 @@ const getPlatforms = async () => {
 // Ruta para pedir videojuegos de la api y de la bd desde el front. 
 // Si no se le pasa query trae 100 videojuegos.
 // Si se le pasa name por query se trae como máximo 15 videojuegos que contengan el name.
+const VIDEOJUEGOS_SOLICITADOS = 15;
 router.get("/videogames", async (req, res) => {
     const {name} = req.query;
     let apiVideogames = await getApiVideogames();
@@ -145,7 +146,7 @@ router.get("/videogames", async (req, res) => {
         let allVideogames = [...apiVideogames, ...dbVideogames];
         let nameVideogames = allVideogames.filter(videogame => videogame.name.toLowerCase().includes(name.toLowerCase()))
         nameVideogames.length ? 
-        res.status(200).send(nameVideogames) :
+        res.status(200).send(nameVideogames.slice(0, VIDEOJUEGOS_SOLICITADOS)) :
         res.status(404).send("Not found videogames");
     } else {
         let allVideogames = [...apiVideogames.slice(0, apiVideogames.length - dbVideogames.length), ...dbVideogames];

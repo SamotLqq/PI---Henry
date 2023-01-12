@@ -1,5 +1,3 @@
-
-
 const initialState = {
     allVideogames : [],
     videogames : [],

@@ -1,55 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
-import { renderGenres } from "./Home";
-import { InputSearch } from "./Search";
-import { ButtonCargar } from "./Home";
-import { SelectFilter } from "./Home";
-import { Titulo } from "./Home";
-import { ButtonCreate as ButtonHome } from "./Home";
 import swal from "sweetalert"
+import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch } from "./styles";
+import { renderGenres } from "./Home";
 const renderPlatforms = renderGenres;
 
-const LabelTitle = styled.label `
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    background-size: cover;
-    color: #CB3234;
-    border: none;
-    border-radius: 16px;
-    font-size: 20px;
-    font-weight: 900;
-    margin: 26px 10px 10px 10px;
-    padding: 10px;
-    display:inline-block;
-`
-
-export const ButtonSelect = styled.button `
-    cursor:pointer;
-    background: #CB3234;
-    color: black;
-    border: none;
-    border-radius: 2vw;
-    font-size: 15px;
-    font-weight: 900;
-    margin: 10px;
-    width: 300px;
-    &:hover {
-        text-decoration:line-through;
-        text-decoration-color: black;
-        text-decoration-thickness: 0.4rem;
-    }
-`
-
-const Error = styled.p `
-    display: inline-block;
-    font-size: 20px;
-    font-weight: 900;
-    width: 500px;
-    color: #CB3234;
-    background: white;
-`
 
 // Realiza las validaciones.
 function validar(input) {
@@ -167,7 +124,7 @@ export default function Create() {
         <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: "url(https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)"}}>
             <Link to={"/main"}><ButtonHome style={{marginBottom: "5vh"}}>Volver</ButtonHome></Link>
             <div><Titulo>CREA TU VIDEOJUEGO</Titulo></div>
-            <div style={{  minHeight: "75vh", display: "flex", justifyContent: "center", alignItems: "center"  }}>
+            <div style={{  minHeight: "75vh", display: "inline-block", justifyContent: "center", alignItems: "center", backgroundColor: "rgba(255,255,255,0.9)"  }}>
             <form action="">
                 <div>
                     <LabelTitle htmlFor="">Nombre: </LabelTitle>

@@ -1,5 +1,19 @@
 import React from "react";
-import { ButtonCargar } from "./Home";
+import { ButtonCargar } from "./styles";
+
+// Retorna un arreglo con las etiquetas necesarias para cada numero del paginado.
+function renderPaginado(pageNumbers, setPaginaActual, paginaActual) {
+    return pageNumbers.map((number, i) => {
+        if (paginaActual === number) {
+            return (
+                <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{background:"black", width: "50px"}}>{number}</ButtonCargar>
+            )
+        }
+        return (
+            <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{width: "50px"}}>{number}</ButtonCargar>
+        )
+    })
+}
 
 export default function Paginado({videogamesPorPagina, cantidadVideogames, setPaginaActual, paginaActual}) {
     const pageNumbers = [];
@@ -9,23 +23,9 @@ export default function Paginado({videogamesPorPagina, cantidadVideogames, setPa
         pageNumbers.push(i + 1);
     }
 
-    // Retorna un arreglo con las etiquetas necesarias para cada numero del paginado.
-    function renderPaginado(pageNumbers) {
-        return pageNumbers.map((number, i) => {
-            if (paginaActual === number) {
-                return (
-                    <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{background:"black", width: "50px"}}>{number}</ButtonCargar>
-                )
-            }
-            return (
-                <ButtonCargar key={i} onClick={() => setPaginaActual(number)} style={{width: "50px"}}>{number}</ButtonCargar>
-            )
-        })
-    }
-
     return (
         <div>
-            {renderPaginado(pageNumbers)}
+            {renderPaginado(pageNumbers, setPaginaActual, paginaActual)}
         </div>
     )
 }

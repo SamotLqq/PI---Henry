@@ -1,33 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { getNameVideogame } from "../redux/actions";
-import { ButtonCargar } from "./Home";
-
-export const InputSearch = styled.input `
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 20px;
-    font-weight: 900;
-    position: static;
-    height: 40px;
-    width: 400px;
-    padding-left: 20px;
-    margin: 20px 10px 0px 0px;
-    ::placeholder {
-        color: white;
-        opacity: 0.5;
-    }
-    ::-webkit-inner-spin-button,
-    ::-webkit-outer-spin-button
-    {
-    -webkit-appearance: none;
-    margin: 0;
-    }
-`
+import { ButtonCargar, InputSearch } from "./styles";
 
 export default function SearchBar({setPaginaActual}) {
     const dispatch = useDispatch();
@@ -46,7 +21,7 @@ export default function SearchBar({setPaginaActual}) {
     }
 
     return (
-        <div style={{marginBottom : "1vw"}}>
+        <div style={{margin : "10px"}}>
             <InputSearch type="text" placeholder="Buscar por nombre..." onChange={handleInputChange} value={name}/>
             <ButtonCargar type="submit" onClick={handleSubmit}>Buscar</ButtonCargar>
         </div>

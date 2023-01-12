@@ -4,6 +4,7 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 import Create from './components/Create';
 import Detail from './components/Detail';
+import { Titulo } from './components/styles';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path='/main' element={<Home/>}/>
         <Route path='/main/:id' element={<Detail/>}/>
         <Route path='/create' element={<Create/>}/>
-        <Route path= '/:any' element={<h1 style={{minHeight: "100vh"}}>Not found page</h1>}/>
+        <Route path= '/:any' element={<Titulo style={{minWidth: "100vw"}}>Not found page</Titulo>}/>
       </Routes>
     </div>
   );

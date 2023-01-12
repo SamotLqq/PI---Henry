@@ -3,104 +3,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filter, getGenres, getVideogames, getDescription, updateOrigen, updateGenres, updateOrder } from "../redux/actions";
 import { Link } from "react-router-dom";
+import { ButtonCargar, ButtonCreate, SelectFilter, Titulo, ButtonSelect } from "./styles";
 import Card from "./Card";
-import styled from "styled-components";
 import Paginado from "./Paginado";
 import SearchBar from "./Search";
-import { ButtonSelect } from "./Create";
 
-// Etiquetas con estilos
-export const ButtonCreate = styled.button `
-    cursor:pointer;
-
-    font-weight: 900;
-    font-size: 20px;
-    line-height: 150%;
-    letter-spacing: -0.02em;
-
-    padding: 4px;
-    width: 200px;
-    height: 40px;
-    position: static;
-
-    color: #CB3234;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    background-size: cover;
-
-    border: 0px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-`
-
-export const Titulo = styled.p `
-    color: white;
-    background: black;
-    height: 80px;
-    width: 100%;
-    font-size: 50px;
-    font-weight: 900;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin: 25px 0px 25px 0px;
-    @media (max-width: 600px) {
-        font-size: 30px;
-    }
-`
-
-export const ButtonCargar = styled.button `
-    cursor:pointer;
-
-    font-weight: 900;
-    font-size: 20px;
-    line-height: 150%;
-    letter-spacing: -0.02em;
-
-    padding: 4px;
-    margin: 8px;
-    width: 100px;
-    height: 40px;
-    position: static;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    background-size: cover;
-    border: 0px;
-    border-radius: 16px;
-    color: #CB3234;
-`
-
-export const SelectFilter = styled.select `
-    cursor:pointer;
-
-    font-weight: 900;
-    font-size: 20px;
-    line-height: 150%;
-    letter-spacing: -0.02em;
-
-    padding: 4px;
-    padding-left:15px;
-    margin: 8px;
-    width: 300px;
-    height: 40px;
-    position: static;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
-    border: 0px;
-    border-radius: 16px;
-    color: #CB3234;
-
-    option {
-        color: white;
-        background: black;
-        font-weight: 900;
-        font-size: 15px;
-        line-height: 150%;
-        letter-spacing: -0.02em;
-        border: 0px !important;
-        border-radius: 16px;
-      }
-`
-
-// Recibe el arreglo con todos los generos y retorna un arreglo con todas las renderizaciones de los mismos
+// Recibe el arreglo con todos los generos y retorna un arreglo con todas las renderizaciones de los mismos.
 export function renderGenres (allGenres) {
     return allGenres.map((genre,i) => {
         return (
@@ -109,7 +17,7 @@ export function renderGenres (allGenres) {
     })
 }
 
-// Recibe el arreglo con todos los videojuegos y retorna un arreglo con todas las renderizaciones de los mismos
+// Recibe el arreglo con todos los videojuegos y retorna un arreglo con todas las renderizaciones de los mismos.
 function renderVideogames (allVideogames) {
     return allVideogames.map(videogame => {
         return (
@@ -118,7 +26,7 @@ function renderVideogames (allVideogames) {
     })
 }
 
-// Filtra los videojuegos por los generos que haya en el array pasado como argumento
+// Filtra los videojuegos por los generos que haya en el array pasado como argumento.
 function filtrarGenero (generos, allVideogames) {
     for (let i = 0; i < generos.length; i++) {
         allVideogames = allVideogames.filter(videogame => videogame.genres.includes(generos[i]))
@@ -133,7 +41,7 @@ function filtrarOrigen (origen, allVideogames) {
     return allVideogames;
 }
 
-// ordena los videojuegos alfabéticamente de forma descendente (z -> a)
+// ordena los videojuegos alfabéticamente de forma descendente (z -> a).
 function descAlf(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.name.toLowerCase() < v2.name.toLowerCase()) return 1;
@@ -141,7 +49,7 @@ function descAlf(videogames) {
     })
 }
 
-// ordena los videojuegos alfabéticamente de forma ascendente (a -> z)
+// ordena los videojuegos alfabéticamente de forma ascendente (a -> z).
 function ascAlf(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.name.toLowerCase() < v2.name.toLowerCase()) return -1;
@@ -149,7 +57,7 @@ function ascAlf(videogames) {
     })
 }
 
-// ordena los videojuegos por rating de forma descendente (5 -> 0)
+// ordena los videojuegos por rating de forma descendente (5 -> 0).
 function descRat(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.rating < v2.rating) return 1;
@@ -157,7 +65,7 @@ function descRat(videogames) {
     })
 }
 
-// ordena los videojuegos por rating de forma ascendente (0 -> 5)
+// ordena los videojuegos por rating de forma ascendente (0 -> 5).
 function ascRat(videogames) {
     return videogames.sort((v1, v2) => {
         if (v1.rating < v2.rating) return -1;
@@ -165,6 +73,7 @@ function ascRat(videogames) {
     })
 }
 
+// recibe un tipo de orden, los videojuegos que se quieren ordenar y retorna los videojuegos ordenados.
 function ordenarVideojuegos(orden, allVideogames) {
     if (orden === "ascAlf") allVideogames = ascAlf(allVideogames)
     else if (orden === "descAlf") allVideogames = descAlf(allVideogames)
@@ -173,11 +82,12 @@ function ordenarVideojuegos(orden, allVideogames) {
     return allVideogames;
 }
 
+// Inicializa los filtros en su estado inicial y trae todos los videojuegos.
 function inicializarEstados (dispatch) {
     dispatch(updateGenres([]))
     dispatch(updateOrigen(""))
     dispatch(updateOrder(""))
-    dispatch(getVideogames(1));
+    dispatch(getVideogames());
 }
 
 export default function Home() {
@@ -203,15 +113,14 @@ export default function Home() {
         if (allGenres.length === 0) dispatch(getGenres());
     }, [])
 
-    // despacha los videogames.
+    // despacha los videogames e inicializa los estados.
     function handleClick(e) {
         e.preventDefault()
         inicializarEstados(dispatch);
-        dispatch(getVideogames())
         setPaginaActual(1);
     }
 
-    // borra algun filtro seleccionado.
+    // borra algun filtro, ordenamiento u orden seleccionado.
     function handleDeleteFilter(e) {
         if (e.target.name === "origen") {
             dispatch(updateOrigen(""));
@@ -267,7 +176,7 @@ export default function Home() {
             <Link to = "/create">
                 <ButtonCreate onClick={() => inicializarEstados(dispatch)}>Subir Videojuego</ButtonCreate>
             </Link>
-            <div style={{display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}><Titulo>VIDEOJUEGOS</Titulo></div>
+            <Titulo>VIDEOJUEGOS</Titulo>
             <ButtonCargar onClick={handleClick} style={{width: "350px"}}>Cargar todos los videojuegos</ButtonCargar>
             <SearchBar setPaginaActual = {setPaginaActual}/>
             <div style={{display:"inline-block", justifyContent: "center"}}>
@@ -279,22 +188,22 @@ export default function Home() {
                         <option value="ascRat">Ascendente rating</option>
                         <option value="descRat">Descendente rating</option>
                     </SelectFilter>
-                    {orden ? <ButtonSelect name="orden" value={orden} onClick={handleDeleteFilter}>{orden}</ButtonSelect> : null}
+                    {orden ? <div><ButtonSelect name="orden" value={orden} onClick={handleDeleteFilter}>{orden}</ButtonSelect></div> : null}
                 </div>
                 <div>
-                    <SelectFilter name={"origen"} defaultValue={'DEFAULT'} onChange={handleFiltros} style={{marginLeft: "1vw", marginRight: "1vh"}}>
+                    <SelectFilter name={"origen"} defaultValue={'DEFAULT'} onChange={handleFiltros}>
                         <option value={'DEFAULT'} disabled>Selecciona origen...</option>
                         <option value="Creados">Creados</option>
                         <option value="Existentes">Existentes</option>
                     </SelectFilter>
-                    {origen ? <ButtonSelect name="origen" value={origen} onClick={handleDeleteFilter}>{origen}</ButtonSelect> : null}
+                    {origen ? <div><ButtonSelect name="origen" value={origen} onClick={handleDeleteFilter}>{origen}</ButtonSelect></div> : null}
                 </div>
                 <div>
                     <SelectFilter name={"generos"} defaultValue={'DEFAULT'} onChange={handleFiltros}>
                         <option value={'DEFAULT'} disabled>Selecciona generos...</option>
                         {allGenres && renderGenres(allGenres)}
                     </SelectFilter>
-                    {generos.map((genre,i) => <ButtonSelect key={i} name="generos" value={genre} onClick={handleDeleteFilter}>{genre}</ButtonSelect>)}
+                    <div>{generos.map((genre,i) => <ButtonSelect key={i} name="generos" value={genre} onClick={handleDeleteFilter}>{genre}</ButtonSelect>)}</div>
                 </div>
             </div>
             <Paginado paginaActual = {paginaActual} videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {videogames.length} setPaginaActual = {setPaginaActual}/>

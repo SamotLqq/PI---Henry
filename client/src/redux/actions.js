@@ -12,7 +12,6 @@ export function getVideogames(llamado) {
             type: "GET_VIDEOGAMES",
             payload: json.data
         });
-    
     }
 }
 
@@ -38,7 +37,7 @@ export function getPlatforms() {
     }
 }
 
-// Accion para filtrar por origen y genero
+// Accion para filtrar por origen y genero.
 export function filter(payload) {
     return {
         type: "FILTER",
@@ -46,7 +45,7 @@ export function filter(payload) {
     }
 }
 
-// Trea los personajes que contengasn name en su name.
+// Trea los videojuegos que contengan name en su name.
 export function getNameVideogame(name) {
     return async function(dispatch) {
         try {
@@ -74,7 +73,7 @@ export function postVideogame(body) {
     }
 }
 
-// acción para traer la descripción del videojuego
+// acción para traer la descripción del videojuego.
 export function getDescription(id) {
     return async function (dispatch) {
         try {
