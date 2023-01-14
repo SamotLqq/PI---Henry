@@ -7,6 +7,7 @@ import { ButtonCargar, ButtonCreate, SelectFilter, Titulo, ButtonSelect } from "
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./Search";
+const SLUG_VACIAR_DETALLE = 0;
 
 // Recibe el arreglo con todos los generos y retorna un arreglo con todas las renderizaciones de los mismos.
 export function renderGenres (allGenres) {
@@ -106,9 +107,9 @@ export default function Home() {
     const firstGame = firstGameNext - videogamesPorPagina;
     const videogamesPagina = videogames.slice(firstGame, firstGameNext);
 
-    // despacha los videogames y los generos al state cuando se monta el componente.
+    // despacha los videogames y generos al state cuando se monta el componente, también borra la descripción.
     useEffect(() => {
-        dispatch(getDescription(0));
+        dispatch(getDescription(SLUG_VACIAR_DETALLE));
         if (videogames.length === 0) dispatch(getVideogames());
         if (allGenres.length === 0) dispatch(getGenres());
     }, [])

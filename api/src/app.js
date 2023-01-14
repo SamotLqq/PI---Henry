@@ -2,7 +2,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const routes = require('./routes/index.js');
+const videogamesMiddleware = require('./routes/videogames.js');
+const videogameMiddleware = require('./routes/videogame.js');
+const genresMiddleware = require('./routes/genres.js');
+const platformsMiddleware = require('./routes/platforms.js');
+
 
 require('./db.js');
 
@@ -22,7 +26,11 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use('/', routes);
+server.use('/videogames', videogamesMiddleware);
+server.use('/videogame', videogameMiddleware);
+server.use('/genres', genresMiddleware);
+server.use('/platforms', platformsMiddleware);
+
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
