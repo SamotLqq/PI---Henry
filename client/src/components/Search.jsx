@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getNameVideogame } from "../redux/actions";
+import { getNameVideogame, updateGenres, updateOrder, updateOrigen } from "../redux/actions";
 import { ButtonCargar, InputSearch } from "./styles";
 
 export default function SearchBar({setPaginaActual}) {
@@ -16,6 +16,9 @@ export default function SearchBar({setPaginaActual}) {
     async function handleSubmit(e) {
         e.preventDefault();
         setName("");
+        dispatch(updateGenres([]));
+        dispatch(updateOrder(""));
+        dispatch(updateOrigen(""));
         await dispatch(getNameVideogame(name));
         setPaginaActual(1);
     }

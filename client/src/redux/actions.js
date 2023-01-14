@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const RUTA_VIDEOGAME = "http://localhost:3001/videogame";
 const RUTA_VIDEOGAMES = "http://localhost:3001/videogames";
 const RUTA_GENRES = "http://localhost:3001/genres";
 const RUTA_PLATFORMS = "http://localhost:3001/platforms";
@@ -77,7 +78,7 @@ export function postVideogame(body) {
 export function getDescription(id) {
     return async function (dispatch) {
         try {
-            var json = await axios.get(RUTA_VIDEOGAMES + "/" + id);
+            var json = await axios.get(RUTA_VIDEOGAME + "/" + id);
             dispatch ({
                 type: "GET_DESCRIPTION",
                 payload: json.data

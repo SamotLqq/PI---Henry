@@ -155,7 +155,7 @@ router.get("/videogames", async (req, res) => {
 })
 
 // Ruta para pedir descripción de videojuego de la api y de la bd desde el front.
-router.get("/videogames/:id", async (req, res) => {
+router.get("/videogame/:id", async (req, res) => {
     const {id} = req.params;
     try {
         if (id == 0) {

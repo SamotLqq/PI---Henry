@@ -82,7 +82,7 @@ function ordenarVideojuegos(orden, allVideogames) {
     return allVideogames;
 }
 
-// Inicializa los filtros en su estado inicial y trae todos los videojuegos.
+// Inicializa los filtros en su estado inicial y trae todos los videojuegos del back.
 function inicializarEstados (dispatch) {
     dispatch(updateGenres([]))
     dispatch(updateOrigen(""))
