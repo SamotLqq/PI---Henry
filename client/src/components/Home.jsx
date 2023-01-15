@@ -20,7 +20,7 @@ function renderVideogames (allVideogames) {
 }
 
 // Inicializa los filtros en su estado inicial y trae todos los videojuegos del back.
-function inicializarEstados (dispatch) {
+export function inicializarEstados (dispatch) {
     dispatch(updateGenres([]))
     dispatch(updateOrigen(""))
     dispatch(updateOrder(""))
@@ -56,7 +56,7 @@ export default function Home() {
     return (
         <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: "url(https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)"}}>
             <div style={{backgroundColor: "rgba(255,255,255,0.8)"}}>
-                <Link to = "/create"> <ButtonCreate onClick={() => inicializarEstados(dispatch)}>Subir Videojuego</ButtonCreate> </Link>
+                <Link to = "/create"> <ButtonCreate>Subir Videojuego</ButtonCreate> </Link>
             </div>
             <Titulo>VIDEOJUEGOS</Titulo>
             <div style={{backgroundColor: "rgba(255,255,255,0.8)", border: "5px solid black"}}>

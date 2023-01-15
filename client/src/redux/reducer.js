@@ -1,3 +1,5 @@
+import { filtrarGenero, filtrarOrigen, ordenarVideojuegos } from "../components/Filtros";
+
 const initialState = {
     allVideogames : [],
     videogames : [],
@@ -16,6 +18,16 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 videogames : action.payload,
+                allVideogames : [...action.payload],
+            }
+        case "GET_FILTER_VIDEOGAMES":
+            let todos = action.payload;
+            todos = filtrarGenero(state.genresFilter, todos);
+            todos = filtrarOrigen(state.origin, todos);
+            todos = ordenarVideojuegos(state.order, todos);
+            return {
+                ...state,
+                videogames : todos,
                 allVideogames : [...action.payload],
             }
         case "GET_GENRES":

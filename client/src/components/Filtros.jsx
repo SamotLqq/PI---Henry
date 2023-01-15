@@ -13,7 +13,7 @@ export function renderGenres (allGenres) {
 }
 
 // Filtra los videojuegos por los generos que haya en el array pasado como argumento.
-function filtrarGenero (generos, allVideogames) {
+export function filtrarGenero (generos, allVideogames) {
     for (let i = 0; i < generos.length; i++) {
         allVideogames = allVideogames.filter(videogame => videogame.genres.includes(generos[i]))
     }
@@ -21,7 +21,7 @@ function filtrarGenero (generos, allVideogames) {
 }
 
 // Filtra los videojuegos por su origen
-function filtrarOrigen (origen, allVideogames) {
+export function filtrarOrigen (origen, allVideogames) {
     if (origen === "Creados") allVideogames = allVideogames.filter(videogame => typeof(videogame.id) === "string");
     else if (origen === "Existentes") allVideogames = allVideogames.filter(videogame => typeof(videogame.id) === "number");
     return allVideogames;
@@ -60,7 +60,7 @@ function ascRat(videogames) {
 }
 
 // recibe un tipo de orden, los videojuegos que se quieren ordenar y retorna los videojuegos ordenados.
-function ordenarVideojuegos(orden, allVideogames) {
+export function ordenarVideojuegos(orden, allVideogames) {
     if (orden === "ascAlf") allVideogames = ascAlf(allVideogames)
     else if (orden === "descAlf") allVideogames = descAlf(allVideogames)
     else if (orden === "ascRat") allVideogames = ascRat(allVideogames)

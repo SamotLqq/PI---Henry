@@ -16,6 +16,17 @@ export function getVideogames(llamado) {
     }
 }
 
+// Accion para traer videogames del back.
+export function getFilterVideogames(llamado) {
+    return async function(dispatch) {
+        var json = await axios.get(RUTA_VIDEOGAMES);
+        dispatch({
+            type: "GET_FILTER_VIDEOGAMES",
+            payload: json.data
+        });
+    }
+}
+
 // Acción para traer generos del back.
 export function getGenres() {
     return async function(dispatch) {

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
+import { getFilterVideogames, getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
 import swal from "sweetalert"
-import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch } from "./styles";
+import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch, IMAGE_BACKGROUND } from "./styles";
 import { renderGenres } from "./Filtros";
+import { inicializarEstados } from "./Home";
 const renderPlatforms = renderGenres;
 
 
@@ -103,7 +104,7 @@ export default function Create() {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
             dispatch(postVideogame(input));
-            dispatch(getVideogames());
+            dispatch(getFilterVideogames());
             swal("Personaje creado con éxito", "", "success");
             setInput({name: "", released: "", rating: "", platforms: [], genres: [], description_raw: "", background_image: ""});
             setErrors({vacio: "vacio"});
@@ -121,7 +122,7 @@ export default function Create() {
     }
 
     return (
-        <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: "url(https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)"}}>
+        <div style={{minWidth: "100vw", minHeight: "100vh", backgroundImage: `url(${IMAGE_BACKGROUND})`}}>
             <Link to={"/main"}><ButtonHome style={{marginBottom: "5vh"}}>Volver</ButtonHome></Link>
             <div><Titulo>CREA TU VIDEOJUEGO</Titulo></div>
             <div style={{  minHeight: "75vh", display: "inline-block", justifyContent: "center", alignItems: "center", backgroundColor: "rgba(255,255,255,0.9)"  }}>

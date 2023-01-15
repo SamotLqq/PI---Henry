@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const GIF_BACKGROUND = "https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif";
+export const IMAGE_BACKGROUND = "https://img.freepik.com/vector-premium/fondo-transparente-videojuegos_6997-1230.jpg?w=2000)";
+export const GIF_LOADING = "https://ikeasistencia.com/img/loading.gif";
+
 export const DivDetalles = styled.div `
 margin-bottom: 20px;
 `
@@ -21,6 +25,7 @@ display: inline-block;
 text-align: center;
 background: black;
 border-radius: 10%;
+border: 10px solid gray;
 `
 
 export const ImgCard = styled.img `
@@ -32,7 +37,7 @@ border-top-right-radius: 10%;
 `
 
 export const LabelTitle = styled.label `
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-image: url(${GIF_BACKGROUND});
     background-size: cover;
     color: #CB3234;
     border: none;
@@ -116,7 +121,7 @@ export const ButtonCreate = styled.button `
     position: static;
 
     color: #CB3234;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-image: url(${GIF_BACKGROUND});
     background-size: cover;
 
     border: 5px solid black;
@@ -155,7 +160,7 @@ export const ButtonCargar = styled.button `
     width: 100px;
     height: 40px;
     position: static;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-image: url(${GIF_BACKGROUND});
     background-size: cover;
     border: 0px;
     border-radius: 16px;
@@ -176,7 +181,7 @@ export const SelectFilter = styled.select `
     width: 300px;
     height: 40px;
     position: static;
-    background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+    background-image: url(${GIF_BACKGROUND});
     border: 0px;
     border-radius: 16px;
     color: #CB3234;
@@ -195,7 +200,7 @@ export const SelectFilter = styled.select `
 
 export const Button1 = styled.button `
    cursor:pointer;
-   background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
+   background-image: url(${GIF_BACKGROUND});
    color: #CB3234;
    border: 5px solid black;
    width: 15vw;

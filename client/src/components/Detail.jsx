@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getDescription } from "../redux/actions";
 import { useLocation } from "react-router-dom";
-import { ContenedorDetail, MostrarOcultar, ButtonCargar, Titulo } from "./styles";
+import { ContenedorDetail, MostrarOcultar, ButtonCargar, Titulo, GIF_LOADING } from "./styles";
 import Card from "./Card";
 
 export default function Detail() {
@@ -26,7 +26,7 @@ export default function Detail() {
     if (load) {
         return (
             <div>
-                <img src="https://ikeasistencia.com/img/loading.gif" alt="Loading..." />
+                <img src={GIF_LOADING} alt="Loading..." />
             </div>
         )
     }
