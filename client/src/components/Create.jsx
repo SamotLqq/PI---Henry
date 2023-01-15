@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
 import swal from "sweetalert"
 import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch } from "./styles";
-import { renderGenres } from "./Home";
+import { renderGenres } from "./Filtros";
 const renderPlatforms = renderGenres;
 
 

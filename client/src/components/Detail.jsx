@@ -19,7 +19,6 @@ export default function Detail() {
         setTimeout(() => {
             setLoad(false);
         }, 3000);
-
     }, [])
 
     const {name, released, rating, genres, background_image, platforms, description_raw} = useSelector(state => state.description);
@@ -34,7 +33,7 @@ export default function Detail() {
 
     return (
         <div >
-            <Titulo style={{minWidth: "100vw"}}>DETALLE DE {name}</Titulo>
+            <Titulo style={{minWidth: "100vw"}}>DETALLE DE: {name}</Titulo>
             <ContenedorDetail>
                 <div style={{margin: "25px"}}>
                     <Card image={background_image} genres={genres ? genres : []} detail={true} platforms={platforms} released={released} rating={rating}/>

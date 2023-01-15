@@ -119,7 +119,8 @@ export const ButtonCreate = styled.button `
     background-image: url(https://img1.picmix.com/output/stamp/normal/0/4/1/6/1526140_3f2af.gif);
     background-size: cover;
 
-    border: 0px;
+    border: 5px solid black;
+    border-top: 0px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
 `
@@ -225,5 +226,26 @@ export const InputSearch = styled.input `
     {
     -webkit-appearance: none;
     margin: 0;
+    }
+`
+export const ContenedorFiltros = styled.div `
+    display: inline-block;
+    justify-content: center;
+    background-color: rgba(255,255,255,0.8);
+    border: 5px solid black;
+    padding: 30px;
+    display: inline-block;
+    margin: 30px;
+`
+
+export const ContenedorFiltrosPadre = styled.div `
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    @media (max-width: 1000px) {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 `

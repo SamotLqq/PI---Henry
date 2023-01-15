@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameVideogame, updateGenres, updateOrder, updateOrigen } from "../redux/actions";
-import { ButtonCargar, InputSearch } from "./styles";
+import { ButtonCargar, ContenedorFiltros, InputSearch } from "./styles";
 
 export default function SearchBar({setPaginaActual}) {
     const dispatch = useDispatch();
@@ -24,9 +24,10 @@ export default function SearchBar({setPaginaActual}) {
     }
 
     return (
-        <div style={{margin : "10px"}}>
+        <ContenedorFiltros>
+            <h1>Buscador</h1>
             <InputSearch type="text" placeholder="Buscar por nombre..." onChange={handleInputChange} value={name}/>
             <ButtonCargar type="submit" onClick={handleSubmit}>Buscar</ButtonCargar>
-        </div>
+        </ContenedorFiltros>
     )
 }
