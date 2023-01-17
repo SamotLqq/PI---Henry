@@ -66,13 +66,13 @@ export const ButtonSelect = styled.button `
     }
 `
 
-export const Error = styled.p `
+export const Error = styled.h3 `
     display: inline-block;
     font-size: 20px;
     font-weight: 900;
     width: 500px;
     color: #CB3234;
-    background: white;
+    background: none;
 `
 
 export const ContenedorDetail = styled.div `

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getFilterVideogames, getGenres, getPlatforms, getVideogames, postVideogame } from "../redux/actions";
+import { getFilterVideogames, getGenres, getPlatforms, postVideogame } from "../redux/actions";
 import swal from "sweetalert"
 import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch, IMAGE_BACKGROUND } from "./styles";
 import { renderGenres } from "./Filtros";
-import { inicializarEstados } from "./Home";
 const renderPlatforms = renderGenres;
 
 
@@ -13,42 +12,46 @@ const renderPlatforms = renderGenres;
 function validar(input) {
     let errors = {};
     const extensions = /(.jpg|.png|.jpeg)$/i;
+    const formatoName = /^[A-Z0-9- ]+$/i
 
     // nombre
     if (!input.name) {
-        errors.name = "Este campo no puede estar vacío";
+        errors.name = "Este campo no puede estar vacío.";
+    }
+    else if (!formatoName.test(input.name)) {
+        errors.name = "Solo se admiten letras del alfabeto latino, números y espacios.";
     }
     // fecha
     else if (!input.released) {
-        errors.released = "Este campo no puede estar incompleto";
+        errors.released = "Este campo no puede estar incompleto.";
     }
     // rating
     else if (!input.rating) {
-        errors.rating = "Este campo no puede estar vacío";
+        errors.rating = "Este campo no puede estar vacío.";
     }
     else if (input.rating > 5) {
-        errors.rating = "Debe ser menor que 5 o 5";
+        errors.rating = "Debe ser menor que 5 o 5.";
     }
     else if (input.rating < 0) {
-        errors.rating = "Debe ser mayor que 0 o 0";
+        errors.rating = "Debe ser mayor que 0 o 0.";
     }
     // imagen
     else if (!input.background_image) {
-        errors.background_image = "Este campo no puede estar vacío";
+        errors.background_image = "Este campo no puede estar vacío.";
     }
     else if (!extensions.test(input.background_image)) {
-        errors.background_image = "Solo extensiones .jpg, .jpeg y .png";
+        errors.background_image = "Solo extensiones .jpg, .jpeg y .png.";
     }
     // descripción
     else if (!input.description_raw) {
-        errors.description_raw = "Este campo no puede estar vacío";
+        errors.description_raw = "Este campo no puede estar vacío.";
     }
     // generos
     else if (input.genres.length === 0) {
-        errors.genres = "Este campo no puede estar vacío";
+        errors.genres = "Este campo no puede estar vacío.";
     }
     else if (input.platforms.length === 0) {
-        errors.platforms = "Este campo no puede estar vacío"
+        errors.platforms = "Este campo no puede estar vacío."
     }
     return errors;
 }
