@@ -15,12 +15,15 @@ export default function SearchBar({setPaginaActual}) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setName("");
-        dispatch(updateGenres([]));
-        dispatch(updateOrder(""));
-        dispatch(updateOrigen(""));
-        await dispatch(getNameVideogame(name));
-        setPaginaActual(1);
+        if (name === "") alert("Debe ingresar un nombre");
+        else {
+            setName("");
+            dispatch(updateGenres([]));
+            dispatch(updateOrder(""));
+            dispatch(updateOrigen(""));
+            await dispatch(getNameVideogame(name));
+            setPaginaActual(1);
+        }
     }
 
     return (
