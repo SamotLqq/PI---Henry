@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getFilterVideogames, getGenres, getPlatforms, postVideogame } from "../redux/actions";
-import swal from "sweetalert"
 import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch, IMAGE_BACKGROUND } from "./styles";
 import { renderGenres } from "./Filtros";
 const renderPlatforms = renderGenres;
@@ -108,12 +107,12 @@ export default function Create() {
         if (Object.keys(errors).length === 0) {
             dispatch(postVideogame(input));
             dispatch(getFilterVideogames());
-            swal("Personaje creado con éxito", "", "success");
+            alert("Datos enviados.");
             setInput({name: "", released: "", rating: "", platforms: [], genres: [], description_raw: "", background_image: ""});
             setErrors({vacio: "vacio"});
         }
         else {
-            swal("Debe completar todos los campos", "", "error");
+            alert("Debe completar todos los campos.");
         }
     }
 
