@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGenres, getVideogames, getDescription, updateOrigen, updateGenres, updateOrder } from "../redux/actions";
+import { getGenres, getVideogames, getDescription, updateOrigen, updateGenres, updateOrder, updateBusqueda, updateSearchActual, updateSearchOn } from "../redux/actions";
 import { Link } from "react-router-dom";
 import { ButtonCargar, ButtonCreate, Titulo, ContenedorFiltrosPadre, GIF_LOADING } from "./styles";
 import Card from "./Card";
@@ -20,10 +20,13 @@ function renderVideogames (allVideogames) {
 }
 
 // Inicializa los filtros en su estado inicial y trae todos los videojuegos del back.
-export function inicializarEstados (dispatch) {
-    dispatch(updateGenres([]))
-    dispatch(updateOrigen(""))
-    dispatch(updateOrder(""))
+function inicializarEstados (dispatch) {
+    dispatch(updateGenres([]));
+    dispatch(updateOrigen(""));
+    dispatch(updateOrder(""));
+    dispatch(updateBusqueda(""));
+    dispatch(updateSearchActual(""));
+    dispatch(updateSearchOn(false));
     dispatch(getVideogames());
 }
 

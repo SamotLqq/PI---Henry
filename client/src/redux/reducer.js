@@ -9,6 +9,9 @@ const initialState = {
     genresFilter: [],
     order: "",
     origin: "",
+    busqueda: "",
+    searchOn: false,
+    searchActual: ""
 }
 
 // definimos el reducer que se encargará de actualizar nuestro estado.
@@ -20,21 +23,11 @@ function rootReducer (state = initialState, action) {
                 videogames : action.payload,
                 allVideogames : [...action.payload],
             }
-        case "GET_FILTER_VIDEOGAMES":
-            let todos = action.payload;
-            todos = filtrarGenero(state.genresFilter, todos);
-            todos = filtrarOrigen(state.origin, todos);
-            todos = ordenarVideojuegos(state.order, todos);
-            return {
-                ...state,
-                videogames : todos,
-                allVideogames : [...action.payload],
-            }
         case "GET_GENRES":
             return {
                 ...state,
                 genres : action.payload,
-            };
+            }
         case "GET_PLATFORMS":
             return {
                 ...state,
@@ -51,10 +44,14 @@ function rootReducer (state = initialState, action) {
                 videogames: action.payload
             }
         case "SEARCH":
+            let ordenadoFiltrado = [...action.payload];
+            ordenadoFiltrado = filtrarGenero(state.genresFilter, ordenadoFiltrado);
+            ordenadoFiltrado = filtrarOrigen(state.origin, ordenadoFiltrado);
+            ordenadoFiltrado = ordenarVideojuegos(state.order, ordenadoFiltrado);
             return {
                 ...state,
-                videogames : action.payload,
-                allVideogames: [...action.payload]
+                videogames : ordenadoFiltrado,
+                allVideogames: action.payload
             }
         case "POST":
             return state;
@@ -72,6 +69,21 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 origin: action.payload
+            }
+        case "UPDATE_BUSQUEDA":
+            return {
+                ...state,
+                busqueda: action.payload
+            }
+        case "UPDATE_SEARCH_ON":
+            return {
+                ...state,
+                searchOn: action.payload
+            }
+        case "UPDATE_SEARCH_ACTUAL":
+            return {
+                ...state,
+                searchActual: action.payload
             }
         default:
             return state;

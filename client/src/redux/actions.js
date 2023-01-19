@@ -16,17 +16,6 @@ export function getVideogames(llamado) {
     }
 }
 
-// Accion para traer videogames del back.
-export function getFilterVideogames(llamado) {
-    return async function(dispatch) {
-        var json = await axios.get(RUTA_VIDEOGAMES);
-        dispatch({
-            type: "GET_FILTER_VIDEOGAMES",
-            payload: json.data
-        });
-    }
-}
-
 // Acción para traer generos del back.
 export function getGenres() {
     return async function(dispatch) {
@@ -57,7 +46,7 @@ export function filter(payload) {
     }
 }
 
-// Trea los videojuegos que contengan name en su name.
+// Trea 15 o los videojuegos que encuentre que contengan name en su name.
 export function getNameVideogame(name) {
     return async function(dispatch) {
         try {
@@ -123,6 +112,28 @@ export function updateOrigen(payload) {
 export function updateGenres(payload) {
     return {
         type: "UPDATE_GENRES",
+        payload
+    }
+}
+
+// Actualizar generos
+export function updateBusqueda(payload) {
+    return {
+        type: "UPDATE_BUSQUEDA",
+        payload
+    }
+}
+
+export function updateSearchOn(payload) {
+    return {
+        type: "UPDATE_SEARCH_ON",
+        payload
+    }
+}
+
+export function updateSearchActual(payload) {
+    return {
+        type: "UPDATE_SEARCH_ACTUAL",
         payload
     }
 }

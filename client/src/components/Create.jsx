@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getFilterVideogames, getGenres, getPlatforms, postVideogame } from "../redux/actions";
+import { getGenres, getNameVideogame, getPlatforms, postVideogame } from "../redux/actions";
 import { ButtonSelect, Error, LabelTitle, ButtonCreate as ButtonHome, Titulo, SelectFilter, ButtonCargar, InputSearch, IMAGE_BACKGROUND } from "./styles";
 import { renderGenres } from "./Filtros";
 const renderPlatforms = renderGenres;
@@ -59,6 +59,7 @@ export default function Create() {
     const dispatch = useDispatch();
     const platforms = useSelector(state => state.platforms);
     const genres = useSelector(state => state.genres);
+    const busqueda = useSelector(state => state.busqueda);
 
     const [input, setInput] = useState({
         name: "",
@@ -106,7 +107,7 @@ export default function Create() {
         e.preventDefault();
         if (Object.keys(errors).length === 0) {
             dispatch(postVideogame(input));
-            dispatch(getFilterVideogames());
+            dispatch(getNameVideogame(busqueda));
             alert("Datos enviados.");
             setInput({name: "", released: "", rating: "", platforms: [], genres: [], description_raw: "", background_image: ""});
             setErrors({vacio: "vacio"});
