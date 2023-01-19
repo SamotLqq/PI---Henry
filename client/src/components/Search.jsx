@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getNameVideogame, updateGenres, updateOrder, updateOrigen } from "../redux/actions";
 import { ButtonCargar, ContenedorFiltros, InputSearch } from "./styles";
 
-export default function SearchBar({setPaginaActual}) {
+export default function SearchBar({setPaginaActual, setLoading}) {
     const dispatch = useDispatch();
     const [name, setName] = useState("");
 
@@ -17,12 +17,16 @@ export default function SearchBar({setPaginaActual}) {
         e.preventDefault();
         if (name === "") alert("Debe ingresar un nombre");
         else {
+            setLoading(true);
             setName("");
             dispatch(updateGenres([]));
             dispatch(updateOrder(""));
             dispatch(updateOrigen(""));
             await dispatch(getNameVideogame(name));
             setPaginaActual(1);
+            setTimeout(() => {
+                setLoading(false);
+            }, 5000);
         }
     }
 

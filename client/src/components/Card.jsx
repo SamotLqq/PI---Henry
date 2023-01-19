@@ -12,13 +12,33 @@ function unirGeneros (genres) {
     return acc;
 }
 
+const CANTIDAD_CARACTERES_SIN_SPACE = 10;
+
+export function formatearNombre(name) {
+    if (name) {
+        let nameFormat = "";
+        let tope = CANTIDAD_CARACTERES_SIN_SPACE;
+        for (let i = 0; i < name.length; i++) {
+            let letra = name[i];
+            if (tope === 0 && letra !== " ") {
+                nameFormat += " ";
+                tope = CANTIDAD_CARACTERES_SIN_SPACE - 1;
+            }
+            else if (letra === " ") tope = CANTIDAD_CARACTERES_SIN_SPACE;
+            else tope--;
+            nameFormat += letra;
+        }
+        return nameFormat;
+    }
+}
+
 export default function Card ({id, name, image, genres, detail, platforms, released, rating}) {
     genres = unirGeneros(genres);
     const navigate = useNavigate();
     return (
         <DivCard>
             <ImgCard src={image} alt="Not Found"/>
-            <h1 style={{color: "white", margin: "5px"}}>{name}</h1>
+            <h1 style={{color: "white", margin: "5px"}}>{formatearNombre(name)}</h1>
             <h3 style={{color: "white"}}>{genres}</h3>
             {!detail ? 
             <DivDetalles><ButtonDetalles onClick={() => navigate("/main/" + id)}>Detalles</ButtonDetalles></DivDetalles> :

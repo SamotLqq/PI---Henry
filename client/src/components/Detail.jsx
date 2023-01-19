@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getDescription } from "../redux/actions";
 import { useLocation } from "react-router-dom";
 import { ContenedorDetail, MostrarOcultar, ButtonCargar, Titulo, GIF_LOADING } from "./styles";
-import Card from "./Card";
+import Card, { formatearNombre } from "./Card";
 
 export default function Detail() {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function Detail() {
 
     return (
         <div >
-            <Titulo style={{minWidth: "100vw"}}>DETALLE DE: {name}</Titulo>
+            <Titulo style={{minWidth: "100vw"}}>DETALLE DE: {formatearNombre(name)}</Titulo>
             <ContenedorDetail>
                 <div style={{margin: "25px"}}>
                     <Card image={background_image} genres={genres ? genres : []} detail={true} platforms={platforms} released={released} rating={rating}/>

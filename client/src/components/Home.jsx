@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getVideogames, getDescription, updateOrigen, updateGenres, updateOrder } from "../redux/actions";
 import { Link } from "react-router-dom";
-import { ButtonCargar, ButtonCreate, Titulo, ContenedorFiltrosPadre } from "./styles";
+import { ButtonCargar, ButtonCreate, Titulo, ContenedorFiltrosPadre, GIF_LOADING } from "./styles";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./Search";
@@ -32,6 +32,7 @@ export default function Home() {
     let videogames = useSelector(state => state.videogames);
     const allGenres = useSelector(state => state.genres);
     const [paginaActual, setPaginaActual] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const videogamesPorPagina = 15;
 
@@ -41,16 +42,24 @@ export default function Home() {
 
     // despacha los videogames y generos al state cuando se monta el componente, también borra la descripción.
     useEffect(() => {
-        dispatch(getDescription(SLUG_VACIAR_DETALLE));
+        setLoading(true);
+        dispatch(getDescription(SLUG_VACIAR_DETALLE))
         if (videogames.length === 0) dispatch(getVideogames());
         if (allGenres.length === 0) dispatch(getGenres());
+        setTimeout(() => {
+            setLoading(false);
+        }, 5000);
     }, [])
 
     // despacha los videogames e inicializa los estados.
     function handleClick(e) {
         e.preventDefault()
+        setLoading(true);
         inicializarEstados(dispatch);
         setPaginaActual(1);
+        setTimeout(() => {
+            setLoading(false);
+        }, 5000);
     }
 
     return (
@@ -63,11 +72,13 @@ export default function Home() {
                 <ButtonCargar onClick={handleClick} style={{width: "350px"}}>Cargar todos los videojuegos</ButtonCargar>
             </div>
             <ContenedorFiltrosPadre>
-                <SearchBar setPaginaActual = {setPaginaActual}/>
+                <SearchBar setPaginaActual = {setPaginaActual} setLoading = {setLoading}/>
                 <Filtros setPaginaActual = {setPaginaActual}/>
             </ContenedorFiltrosPadre>
-            <Paginado paginaActual = {paginaActual} videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {videogames.length} setPaginaActual = {setPaginaActual}/>
-            {videogamesPagina && renderVideogames(videogamesPagina)}
+            {!loading && videogamesPagina.length !== 0 && <Paginado paginaActual = {paginaActual} videogamesPorPagina = {videogamesPorPagina} cantidadVideogames = {videogames.length} setPaginaActual = {setPaginaActual}/>}
+            {loading &&  <img src={GIF_LOADING} alt="Loading..." />}
+            {!loading && videogamesPagina.length !== 0 && renderVideogames(videogamesPagina)}
+            {!loading && videogamesPagina.length === 0 && <Titulo>No se encontraron videojuegos</Titulo>}
         </div>
     )
 }

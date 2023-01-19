@@ -15,7 +15,12 @@ width: 80px;
 height: 40px;
 background: gray;
 color: white;
-border-radius: 5px
+border-radius: 5px;
+transition: 0.5s;
+&:hover {
+    color: red;
+    width: 100%;
+}
 `
 
 export const DivCard = styled.div `
@@ -26,6 +31,11 @@ text-align: center;
 background: black;
 border-radius: 10%;
 border: 10px solid gray;
+transition: 0.5s;
+&:hover {
+    width: 310px;
+    border: 10px solid red;
+}
 `
 
 export const ImgCard = styled.img `
@@ -105,6 +115,12 @@ export const MostrarOcultar = styled.button `
     border: 0px;
     border-radius: 16px;
     color: white;
+
+    transition: 0.5s;
+    &:hover {
+        color: red;
+        width: 100%;
+    }
 `
 
 export const ButtonCreate = styled.button `
@@ -133,7 +149,7 @@ export const ButtonCreate = styled.button `
 export const Titulo = styled.p `
     color: white;
     background: black;
-    height: 80px;
+    height: auto;
     width: 100%;
     font-size: 50px;
     font-weight: 900;
@@ -142,6 +158,7 @@ export const Titulo = styled.p `
     justify-content: center;
     align-items: center;
     margin: 25px 0px 25px 0px;
+    padding: 25px 0px 25px 0px;
     @media (max-width: 600px) {
         font-size: 30px;
     }
