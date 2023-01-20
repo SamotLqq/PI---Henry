@@ -68,6 +68,14 @@ export function ordenarVideojuegos(orden, allVideogames) {
     return allVideogames;
 }
 
+// formatea una string del tipo de orden
+function formatOrden(orden) {
+    if (orden === "ascAlf") return "Ascendente Alfabético";
+    else if (orden === "descAlf") return "Descendente Alfabético";
+    else if (orden === "ascRat") return "Ascendente Rating";
+    else if (orden === "descRat") return "Descendente Rating";
+}
+
 
 export default function Filtros({setPaginaActual}) {
 
@@ -140,7 +148,7 @@ export default function Filtros({setPaginaActual}) {
                 <option value="ascRat">Ascendente rating</option>
                 <option value="descRat">Descendente rating</option>
             </SelectFilter>
-            {orden ? <div><ButtonSelect name="orden" value={orden} onClick={handleDeleteFilter}>{orden}</ButtonSelect></div> : null}
+            {orden ? <div><ButtonSelect name="orden" value={orden} onClick={handleDeleteFilter}>{formatOrden(orden)}</ButtonSelect></div> : null}
         </div>
         <h1>Filtros</h1>
         <div>
